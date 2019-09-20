@@ -49,6 +49,7 @@ public class IdleDisconnectTest extends CQLTester
             client.connect(false, false);
             Assert.assertTrue(client.channel.isOpen());
             long start = System.currentTimeMillis();
+            client.execute("SELECT * FROM system.peers", ConsistencyLevel.ONE);
             CompletableFuture.runAsync(() -> {
                 while (!Thread.currentThread().isInterrupted() && client.channel.isOpen());
             }).get(30, TimeUnit.SECONDS);
