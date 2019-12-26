@@ -32,6 +32,7 @@ import org.apache.cassandra.streaming.StreamReceiveTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.db.ColumnFamilyStore;
 import org.apache.cassandra.db.Keyspace;
 import org.apache.cassandra.db.Mutation;
@@ -169,7 +170,7 @@ public class CassandraStreamReceiver implements StreamReceiver
 
     private boolean hasCDC(ColumnFamilyStore cfs)
     {
-        return cfs.metadata().params.cdc;
+        return cfs.metadata().params.cdc && DatabaseDescriptor.isCDCEnabled();
     }
 
     /*
